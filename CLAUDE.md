@@ -9,17 +9,19 @@ You are a very disciplined programmer, so you will keep the code flexible, easy 
 ## Project Overview
 This project provides tools to interpolate ERA5 climate reanalysis data to a 0.5-degree latitude/longitude grid and aggregate it to various temporal resolutions (hourly, daily, or monthly).
 
-## Core Mandates
-0. **File Permission**: Only allow writting or modifying files in this workspace (same folder where this `CLAUDE.md` lives.
-1. **Data Source**: The original ERA5 data is located at `/p/projects/climate_data_central/reanalysis/ERA5/`.
-2. **Interpolation**: Data must be interpolated to a 0.5-degree lat/lon grid.
-3. **Temporal Resolution**: Users must be able to choose between hourly, daily, or monthly temporal aggregation.
-4. **Output Structure**: The output directory structure must mimic the original ERA5 data structure within a user-specified root folder.
-5. **Implementation**: 
+## Core Mandates -- strictly enforced
+
+1. **File Permission**: Only allow writting or modifying files in this workspace (same folder where this `CLAUDE.md` lives.
+2. **Data Source**: The original ERA5 data is located at `/p/projects/climate_data_central/reanalysis/ERA5/`.
+3. **Interpolation**: Data must be interpolated to a 0.5-degree lat/lon grid.
+4. **Temporal Resolution**: Users must be able to choose between hourly, daily, or monthly temporal aggregation.
+5. **Output Structure**: The output directory structure must mimic the original ERA5 data structure within a user-specified root folder.
+6. **Implementation**: 
     - Use Python 3 for the core interpolation logic.
     - Required Python packages: `xarray`, `argparse`, and `netCDF4` (implied for xarray).
     - Use `argparse` for handling command-line arguments in Python.
     - Python scripts must be executed via customizable bash scripts.
+7. **GIT**: Do not commit without permission.
 
 ## Conventions
 - Python code should follow PEP 8 standards.
