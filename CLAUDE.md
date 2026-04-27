@@ -31,4 +31,5 @@ This project provides tools to interpolate ERA5 climate reanalysis data to a 0.5
 - `interpolate_era5.py`: The main engine that interpolates ERA5 climate data
 - `run_interpolation.sh`: The script that user can run like a command to execute interpolation.
 - `activate_env.sh`: Sources this file to activate the `gemini_env` conda environment before running any scripts.
+- `download_era5_daily.py`: Downloads ERA5 daily statistics from CDS for selected variables and year range. Skips files that already exist. Output structure: `<output_root>/<variable>/<variable>_<year>.nc`.
 
