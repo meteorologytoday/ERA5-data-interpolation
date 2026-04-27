@@ -5,7 +5,7 @@ import numpy as np
 import xarray as xr
 
 
-def interpolate_and_resample(input_file, output_file, temporal_res):
+def interpolate_and_resample(input_file, output_file, temporal_res, compress_level=4):
     """
     Interpolates ERA5 data to 0.5 degree grid and resamples to desired temporal resolution.
     """
@@ -47,8 +47,12 @@ def interpolate_and_resample(input_file, output_file, temporal_res):
         # Ensure output directory exists
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-        # Save to netcdf
-        ds_resampled.to_netcdf(output_file)
+        # Save to netcdf with optional zlib compression
+        encoding = {}
+        if compress_level > 0:
+            encoding = {var: {"zlib": True, "complevel": compress_level}
+                        for var in ds_resampled.data_vars}
+        ds_resampled.to_netcdf(output_file, encoding=encoding)
         print(f"Successfully processed {input_file} -> {output_file}")
 
     except Exception as e:
@@ -61,10 +65,12 @@ def main():
     parser.add_argument("output_file", help="Path to the output NetCDF file.")
     parser.add_argument("--res", choices=['hourly', 'daily', 'monthly'], default='hourly',
                         help="Target temporal resolution (default: hourly).")
+    parser.add_argument("--compress", type=int, default=4, metavar="LEVEL",
+                        help="zlib compression level 0–9 (0 = off, default: 4).")
 
     args = parser.parse_args()
 
-    interpolate_and_resample(args.input_file, args.output_file, args.res)
+    interpolate_and_resample(args.input_file, args.output_file, args.res, args.compress)
 
 if __name__ == "__main__":
     main()
