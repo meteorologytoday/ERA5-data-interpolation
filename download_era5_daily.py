@@ -15,13 +15,13 @@ DEFAULT_VARIABLES = [
 ]
 
 
-def download_year(args):
-    variable, year, output_root = args
+def download_month(args):
+    variable, year, month, output_root = args
 
     output_dir = os.path.join(output_root, variable)
     os.makedirs(output_dir, exist_ok=True)
 
-    output_file = os.path.join(output_dir, f"{variable}_{year}.nc")
+    output_file = os.path.join(output_dir, f"{variable}_{year}_{month}.nc")
 
     if os.path.exists(output_file):
         print(f"Skipping {output_file} (already exists)")
@@ -31,7 +31,7 @@ def download_year(args):
         "product_type": "reanalysis",
         "variable": [variable],
         "year": str(year),
-        "month": ALL_MONTHS,
+        "month": month,
         "day": ALL_DAYS,
         "daily_statistic": "daily_mean",
         "time_zone": "utc+00:00",
@@ -39,7 +39,7 @@ def download_year(args):
         "format": "netcdf",
     }
 
-    print(f"Downloading {variable} {year} -> {output_file}")
+    print(f"Downloading {variable} {year}-{month} -> {output_file}")
     client = cdsapi.Client()
     client.retrieve(DATASET, request).download(output_file)
     print(f"Saved {output_file}")
@@ -50,7 +50,7 @@ def main():
         description="Download ERA5 daily statistics from CDS to a structured output directory."
     )
     parser.add_argument("--output-root", required=True,
-                        help="Root output directory. Files are saved as <output_root>/<variable>/<variable>_<year>.nc")
+                        help="Root output directory. Files are saved as <output_root>/<variable>/<variable>_<year>_<month>.nc")
     parser.add_argument("--year-start", type=int, required=True,
                         help="First year to download.")
     parser.add_argument("--year-end", type=int, required=True,
@@ -66,13 +66,14 @@ def main():
         parser.error("--year-end must be >= --year-start")
 
     tasks = [
-        (variable, year, args.output_root)
+        (variable, year, month, args.output_root)
         for year in range(args.year_start, args.year_end + 1)
+        for month in ALL_MONTHS
         for variable in args.variables
     ]
 
     with multiprocessing.Pool(processes=args.workers) as pool:
-        pool.map(download_year, tasks)
+        pool.map(download_month, tasks)
 
     print("All downloads completed.")
 
