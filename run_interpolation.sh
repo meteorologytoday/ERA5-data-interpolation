@@ -56,9 +56,13 @@ for input_file in "${INPUT_DIR}"/*.nc; do
     
     # Define output file path (mimicking original structure)
     output_file="${OUTPUT_ROOT}/${VARIABLE}/${filename}"
-    
-    echo "Processing $filename ..."
-    python3 interpolate_era5.py "$input_file" "$output_file" --res "$TEMPORAL_RES"
+   
+    if [ -f "$output_file" ]; then
+        echo "The file already exists. Skip: $filename"
+    else
+        echo "Processing $filename ..."
+        python3 interpolate_era5.py "$input_file" "$output_file" --res "$TEMPORAL_RES"
+    fi
 done
 
 echo "All tasks completed."
