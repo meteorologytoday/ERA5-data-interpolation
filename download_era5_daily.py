@@ -57,8 +57,8 @@ def main():
                         help="Last year to download (inclusive).")
     parser.add_argument("--variables", nargs="+", default=DEFAULT_VARIABLES,
                         help=f"Variables to download (default: {DEFAULT_VARIABLES})")
-    parser.add_argument("--workers", type=int, default=2,
-                        help="Number of parallel download workers (default: 2).")
+    parser.add_argument("--workers", type=int, default=3,
+                        help="Number of parallel download workers (default: 3).")
 
     args = parser.parse_args()
 
