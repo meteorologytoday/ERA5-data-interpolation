@@ -27,8 +27,8 @@ def interpolate_and_resample(input_file, output_file, temporal_res, compress_lev
 
         # Define target grid: 0.5 degree
 
-        target_lat = np.arange(90, -90.5, -0.5)
-        target_lon = np.arange(0, 360, 0.5)
+        target_lat = np.arange(-89.75, 90, 0.5)   # 360 cell centers, -90~90
+        target_lon = np.arange(0.25, 360, 0.5)    # 720 cell centers, 0~360
 
         # Interpolate
         interp_coords = {lat_name: target_lat, lon_name: target_lon}

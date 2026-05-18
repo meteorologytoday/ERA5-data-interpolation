@@ -1,7 +1,7 @@
 # ERA5 forcing data for POEM LPJmL
 
 ## Environment
-The conda environment please use the miniconda3 that lives in `$HOME/miniconda3` with the environment `gemini_env`. Do not proceed if you cannot find this environment
+The conda environment please use the miniconda3 that lives in `$HOME/miniconda3` with the environment `rainbow`. Do not proceed if you cannot find this environment
 
 ## Character
 You are a very disciplined programmer, so you will keep the code flexible, easy to read, and reusable.

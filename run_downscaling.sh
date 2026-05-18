@@ -1,7 +1,7 @@
 #!/bin/bash
 
 default_input_dir=/p/projects/climate_data_central/reanalysis/ERA5
-MAX_CPUS=4
+MAX_CPUS=1
 
 usage() {
     echo "Usage: $0 [-j max_cpus]"
@@ -38,7 +38,7 @@ active_jobs=0
 
 for year in $( seq $beg_year $end_year ); do
     for variable in "${variables[@]}"; do
-        ./main_interpolation.sh -o ERA5_0p5deg_hourly -v "$variable" -i "$default_input_dir" -r daily -y "$year" &
+        ./main_interpolation.sh -o ERA5_0p5deg_hourly -v "$variable" -i "$default_input_dir" -r hourly -y "$year" &
         (( active_jobs++ ))
         if (( active_jobs >= MAX_CPUS )); then
             wait -n 2>/dev/null || wait
