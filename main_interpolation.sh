@@ -61,7 +61,7 @@ for input_file in "${INPUT_DIR}"/*.nc; do
         echo "The file already exists. Skip: $filename"
     else
         echo "Processing $filename ..."
-        python3 interpolate_era5.py "$input_file" "$output_file" --res "$TEMPORAL_RES"
+        python3 src/interpolate_era5.py "$input_file" "$output_file" --res "$TEMPORAL_RES"
     fi
 done
 

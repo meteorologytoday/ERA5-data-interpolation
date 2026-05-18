@@ -8,7 +8,7 @@
 # Acceptable time formats include "minutes", "minutes:seconds", "hours:minutes:seconds",
 #                   "days-hours", "days-hours:minutes" and "days-hours:minutes:seconds"
 #SBATCH --qos=short
-#SBATCH --time=23:59:00 
+#SBATCH --time=10:00:00 
 #
 #SBATCH --account=poem
 #SBATCH --output=sbatch.64.%j.out

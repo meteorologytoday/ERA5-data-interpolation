@@ -30,8 +30,16 @@ This project provides tools to interpolate ERA5 climate reanalysis data to a 0.5
 
 ## Files and descriptions
 
-- `interpolate_era5.py`: The main engine that interpolates ERA5 climate data
-- `run_interpolation.sh`: The script that user can run like a command to execute interpolation.
-- `activate_env.sh`: Sources this file to activate the `gemini_env` conda environment before running any scripts.
-- `download_era5_daily.py`: Downloads ERA5 daily statistics from CDS for selected variables and year range. Skips files that already exist. Output structure: `<output_root>/<variable>/<variable>_<year>.nc`.
+All Python scripts live under `src/`. Bash scripts live in the project root and are the intended entry points.
+
+### Bash scripts (project root)
+- `run_downscaling.sh`: Top-level orchestrator — runs interpolation in parallel (Phase 1), then yearly concatenation (Phase 2). Supports `-j`, `-o`, `-O`, and optional `--lat-min/max`, `--lon-min/max` bbox mask.
+- `main_interpolation.sh`: Processes one variable+year — loops over monthly source files and calls `src/interpolate_era5.py` for each.
+- `activate_env.sh`: Activates the conda environment before running any scripts.
+
+### Python scripts (`src/`)
+- `src/interpolate_era5.py`: Interpolates a single ERA5 NetCDF file to the 0.5-degree grid and resamples to the target temporal resolution.
+- `src/concat_yearly.py`: Concatenates monthly interpolated files into a single yearly file (`[variable]_[YYYY].nc`). Validates the hourly time axis and optionally masks outside a lat-lon box with NaN (full grid preserved, compressed output).
+- `src/download_era5_daily.py`: Downloads ERA5 daily statistics from CDS for selected variables and year range. Skips files that already exist. Output structure: `<output_root>/<variable>/<variable>_<year>.nc`.
+- `src/download_example.py`: Example script demonstrating CDS download usage.
 
